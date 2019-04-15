@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+   
+}
+@section scripts{
+<script>
+    $(document).ready(function () {
+        var btnExit = $("#exit");
+        btnExit.click(function () {
+            window.close();
+        });
+    });
+</script>
+    }
+<div class="jumbotron">
+    <h2>Home</h2>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <input id="newUser" class="btn btn-default" type="submit" value="New User" onclick="@("window.location.href='" + @Url.Action("NewUser", "User") + "'");">
+        <button id="existingUser" class="btn btn-default" type="submit" onclick="@("window.location.href='" + @Url.Action("UserLogin", "User") + "'");">Existing User</button>
+        <input id="admin" class="btn btn-default" type="submit" value="Admin" onclick="@("window.location.href='" + @Url.Action("Admin", "User") + "'");">
+        <button id="exit" class="btn btn-default" type="submit">Exit</button>
+    </div>
+</div>

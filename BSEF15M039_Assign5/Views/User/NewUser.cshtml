@@ -1,0 +1,151 @@
+﻿@model BSEF15M039_Assign5.Entities.UserDTO
+@{
+    ViewBag.Title = "NewUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#age").blur(function () {
+               // alert("hello");
+                var age = $("#age").val();
+                if (age <= 0) {
+                    $("#ageError").text("*Invalid Age");
+                }
+                else
+                    $("#ageError").text("");
+            });
+            $("#NIC").blur(function () {
+                var nic = $("#NIC").val();
+                var myRegExp = new RegExp(/\d{5}-\d{7}-\d/);
+                if (myRegExp.test(nic) == false) {
+                    $("#nicError").text("*Invalid format");
+                }
+                else
+                    $("#nicError").text("");
+            });
+        });
+    </script>
+    }
+
+<div class="jumbotron">
+    <h2 >New User</h2>
+    </div>
+<div>
+
+    <table><tr><td>
+    <form action="~/User/NewUser" method="post" enctype="multipart/form-data">
+        <input type="hidden" id="userid" name="userid" value="@Model.userid" />
+        <input type="hidden" id="imageName" name="imageName" value="@Model.imageName" />
+        <table>
+            <tr>
+                <td>Name:</td>
+                <td><input type="text" name="name" id="name" value="@Model.name" required /></td>
+            </tr>
+            <tr>
+                <td>Login:</td>
+                <td><input type="text" name="login" id="login" value="@Model.login" required /><span style="color:red; padding-left:5px;font-family:'Comic Sans MS'">@ViewBag.loginError</span></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input type="password" name="password" value="@Model.password" id="password" required /></td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td><input type="email" name="email" id="email" value="@Model.email" required /><span style="color:red; padding-left:5px;font-family:'Comic Sans MS'">@ViewBag.emailError</span></td>
+            </tr>
+            <tr>
+                <td>Image: </td>
+                <td><input type="file" id="image" name="image" /></td>
+
+            </tr>
+            <tr>
+                <td>Gender:</td>
+                <td>
+                    @{
+                        var female = "";
+                        var male = "";
+                        var other = "";
+                        if (Model.gender == "f")
+                        {
+                            female = "selected";
+                        }
+                        else if (Model.gender == "m")
+                        {
+                            male = "selected";
+                        }
+                        else if (Model.gender == "o")
+                        {
+                            other = "selected";
+                        }
+                    }
+
+                    <select style="width:174px;height:26px;" id="gender" name="gender" required>
+                        <option value=0>---Select---</option>
+                        <option @female value="f">Female</option>
+                        <option @male value="m">Male</option>
+                        <option @other value="o">Others</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Address:</td>
+                <td><input type="text" id="address" name="address" value="@Model.address" required /></td>
+            </tr>
+            <tr>
+                <td>Age:</td>
+                <td><input type="number" id="age" name="age" value="@Model.age" required /><span id="ageError" style="color:red; padding-left:5px;font-family:'Comic Sans MS'"></span></td>
+            </tr>
+            <tr>
+                <td>NIC:</td>
+                <td><input type="text" id="NIC" name="NIC" value="@Model.NIC" placeholder="_____-_______-_" required /><span id="nicError" style="color:red; padding-left:5px;font-family:'Comic Sans MS'">@ViewBag.NICError</span></td>
+            </tr>
+            <tr>
+                <td>DOB:</td>
+                <td><input style="width:174px;height:26px;" type="date" value="@string.Format("{0:yyyy-MM-dd}", Model.DOB)" id="DOB" name="DOB" required /><span style="color:red; padding-left:5px;font-family:'Comic Sans MS'">@ViewBag.DateError</span></td>
+            </tr>
+            <tr>
+                <td>Sports:</td>
+                <td>
+                    @{
+                        var h = "";
+                        var cr = "";
+                        var ch = "";
+                        if (Model.chess == true)
+                        {
+                            ch = "checked";
+                        }
+                        if (Model.cricket == true)
+                        {
+                            cr = "checked";
+                        }
+                        if (Model.hockey == true)
+                        {
+                            h = "checked";
+                        }
+
+                    }
+                    <input type="checkbox" @cr id="cricket" name="cricket">Cricket
+                    <input type="checkbox" @ch id="chess" name="chess">Chess
+                    <input type="checkbox" @h id="hockey" name="hockey">hockey
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button class="btn btn-default" id="save" name="save" style="margin-right:10px;margin-left:25px;margin-top:10px;" type="submit">Save</button>
+                    <button class="btn btn-default" style="margin-top:10px;" id="cancel" name="cancel" type="submit" onclick="@("window.location.href='"+Url.Action("Index","Home")+"'")">Cancel</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</td>
+        <td>
+            <img src="~/uploadedFiles/@Model.imageName" alt="Image Here" style="width:100px;height:100px" />
+        </td>
+</tr>
+   </table>
+</div>
+
+

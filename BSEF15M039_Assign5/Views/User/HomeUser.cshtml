@@ -1,0 +1,18 @@
+﻿@model BSEF15M039_Assign5.Entities.UserDTO
+@{
+    ViewBag.Title = "HomeUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="jumbotron">
+    <h2>Home User</h2>
+</div>
+
+<h2 style="margin-left:20px">Welcome @Model.name</h2>
+<div style="text-align:right; margin-right:100px">
+    <img src="~/uploadedFiles/@Model.imageName" style="width:200px;height:200px;"><br />
+    <button style="margin-top:10px" class="btn btn-default" onclick="@("window.location.href='"+Url.Action("EditUser","User")+"'")" type="submit">Edit Profile</button>
+    <button style="margin-top:10px" class="btn btn-default" type="submit" onclick="@("window.location.href='"+Url.Action("UserLogout","User")+"'")">Logout</button>
+</div>
+
+
+

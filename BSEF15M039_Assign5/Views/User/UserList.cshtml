@@ -1,0 +1,85 @@
+﻿@model List<BSEF15M039_Assign5.Entities.UserDTO>
+@{
+    ViewBag.Title = "UserList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $(deleteBtn).click(function () {
+                var isConfirm = confirm("User will be deleted. Click Ok to continue and Cancel to Ignore");
+                if (isConfirm) {
+                    $(this).closest("tr").remove();
+                    var BtnVal = $(this).val();
+                    //alert(BtnVal);
+                    var settings = {
+                        type: "POST",
+                        dataType: "json",
+                        url: '@Url.Content("~/User/DeleteUser")',
+                        data: { "id": BtnVal },
+                        success: function (result) {
+                            alert("ID "+BtnVal+" User Deleted Successfully");
+                        }
+                    };
+                    $.ajax(settings);
+                }
+            });
+        });
+    </script>
+    }
+
+<div class="container">
+    <div class="login-box">
+        <div class="box-header">
+            <h2>UserList</h2>
+        </div>
+
+        <table style="border-bottom-style:solid" cellpadding="4" cellspacing="4" align="center">
+            <tr>
+                <th>User Id</th>
+                <th>Name</th>
+                <th>Login</th>
+                <th>Gender</th>
+                <th>Address</th>
+                <th>Age</th>
+                <th>NIC</th>
+                <th>DOB</th>
+                <th>Cricket</th>
+                <th>Hockey</th>
+                <th>Chess</th>
+                <th>Image</th>
+                <th>Created On</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            @{
+                for (int i = 0; i < Model.Count; i++)
+                {
+
+                    <tr>
+                        <td>@Model[i].userid</td>
+                        <td>@Model[i].name</td>
+                        <td>@Model[i].login</td>
+                        <td>@Model[i].gender</td>
+                        <td>@Model[i].address</td>
+                        <td>@Model[i].age</td>
+                        <td>@Model[i].NIC</td>
+                        <td>@Model[i].DOB.ToShortDateString()</td>
+                        <td>@Model[i].cricket</td>
+                        <td>@Model[i].hockey</td>
+                        <td>@Model[i].chess</td>
+                        <td><img src="~/uploadedFiles/@Model[i].imageName" height="40px" width="40px"/></td>
+                        <td>@Model[i].createdon.ToShortDateString()</td>
+                        <td><button type="submit" onclick="@("window.location.href='"+@Url.Action("EditList","User",new { id=@Model[i].userid})+"'")">Edit</button></td>
+                        <td><button type="submit" id="deleteBtn" value="@Model[i].userid"> Delete</button></td>
+                    </tr>
+                }
+
+            }
+        </table><br/>
+        <div style="text-align:right">
+            <button type="submit" onclick="@("window.location.href='"+Url.Action("Logout","User")+"'")">Logout</button>
+        </div>
+</div>
+</div>

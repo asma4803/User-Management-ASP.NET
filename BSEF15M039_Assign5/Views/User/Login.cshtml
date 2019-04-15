@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="jumbotron">
+    <h2>Admin Login</h2>
+</div>
+
+<form action="@Url.Content("~/User/Login")" method="post">
+    <table >
+        <tr>
+            <td> Login :</td>
+            <td><input type="text" id="txtLogin" value="@ViewBag.username" name="txtLogin" required /></td><td><span style="color:red">@ViewBag.userError</span></td>
+        </tr>
+        <tr><td>Password : </td>
+            <td> <input type="password" id="txtPass" name="txtPass" required /></td><td><span style="color:red" >@ViewBag.passError</span></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input class="btn btn-default" type="submit" vlaue="Login" name="btnLogin" id="btnLogin"/></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><span style="color:red">@ViewBag.message</span></td>
+        </tr>
+    </table>
+
+</form>
+
